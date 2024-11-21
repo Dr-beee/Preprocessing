@@ -1,4 +1,9 @@
 # resize_images.ps1
+
+# 쉘 스크립트가 안될경우 아래 입력
+### Set-ExecutionPolicy Bypass -Scope Process ###
+
+# ex
 # 성충 응애
 # |-bee_resized
 # |-resize_images.ps1
