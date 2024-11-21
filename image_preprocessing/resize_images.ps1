@@ -28,9 +28,9 @@ foreach($folder in $folders){
     $jpgFile = Get-ChildItem -Path $folder.FullName -Filter "*.jpg" | Select-Object -First 1
 
     if ($jpgFile){
-        $outputFileName = "$($folder.Name).jpg"
+        $outputFileName = $jpgFile.Name
         $outputPath = Join-Path $outputFolder $outputFileName
-        magick $jpgFile.FullName -resize 608x432 -background black -gravity center -extent 608x608 $outputPath
+        magick $jpgFile.FullName -resize 640x360 -background black -gravity center -extent 640x640 $outputPath
         Write-Output "Processed $jpgFile.FUllname to $outputPath"
     }else{
         Write-Output "Image not found in $folder"
