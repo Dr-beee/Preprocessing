@@ -1,5 +1,9 @@
 # resize_images.ps1
 
+# Imagemagick 오픈 소스 프로그램 다운로드
+
+# powershell에 ./resize_images.ps1 입력하여 실행
+
 # 쉘 스크립트가 안될경우 아래 입력
 ### Set-ExecutionPolicy Bypass -Scope Process ###
 
