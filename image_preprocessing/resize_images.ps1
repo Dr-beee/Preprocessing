@@ -1,4 +1,10 @@
 # resize_images.ps1
+# 성충 응애
+# |-bee_resized
+# |-resize_images.ps1
+# |-027 |-(난수).jpg
+# |-039 |-(난수).jpg
+# |- ...
 
 $inputFolder = "."
 
