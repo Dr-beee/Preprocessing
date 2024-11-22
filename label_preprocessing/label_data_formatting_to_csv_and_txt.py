@@ -51,9 +51,8 @@ for root, dirs, files in folders:
 
             image_all_data = []
             cateogory = label_data["categories"]
-            image_width = float(label_data["image"]["width"])
-            image_height = float(label_data["image"]["height"])
-
+            image_width = float(label_data["image"]["width"]) #1920
+            image_height = float(label_data["image"]["height"]) #1080
             larva_count = 0
             for data in label_data["annotations"]:
 
@@ -64,9 +63,8 @@ for root, dirs, files in folders:
                     larva_count += 1
 
                 min_x, min_y, max_x, max_y = map(float, data["bbox"])
-                x_center, y_center = (min_x + max_x) / 2 / image_width, (min_y + max_y) / 2 / image_height
-                width, height = (max_x - min_x) / image_width, (max_y - min_y) / image_height
-
+                x_center, y_center = (min_x + max_x) / (6*640), (min_y + max_y) / (6*640)+7/32
+                width, height = (max_x - min_x) / image_width, (max_y - min_y) / image_width
                 disease = cateogory[int(data["category_id"])]["name"].split("_")[1]
 
                 image_all_data.append(
