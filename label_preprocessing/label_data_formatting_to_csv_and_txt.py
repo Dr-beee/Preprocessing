@@ -53,6 +53,7 @@ for root, dirs, files in folders:
             cateogory = label_data["categories"]
             image_width = float(label_data["image"]["width"]) #1920
             image_height = float(label_data["image"]["height"]) #1080
+            
             larva_count = 0
             for data in label_data["annotations"]:
 
@@ -99,11 +100,22 @@ for root, dirs, files in folders:
 # 중복 데이터 제거
 # 유충 데이터(class_id<0) 제거
 if os.path.exists(output_csv):
-    print("csv 중복 제거, 유충 데이터 제거 실행")
+    print("--csv 중복 제거, 유충 데이터 제거 실행--")
     df = pd.read_csv(output_csv)
-    # 중복 데이터 제거
+    # id가 중복되는 데이터 제거
+    duplicates = df[df.duplicated(subset=["image_id", "annotation_id"], keep=False)]
+    unique_duplicates = duplicates.groupby(["image_id", "annotation_id"]).first().reset_index()
+    if not unique_duplicates.empty:
+        logging.info("----중복 데이터 발견 및 제거된 항목----")
+        for row in duplicates.itertuples(index=False):
+            logging.warning(f"image_id={row.image_id}, annotation_id={row.annotation_id}가 겹칩니다")
+            print(f"image_id={row.image_id}, annotation_id={row.annotation_id}가 겹칩니다")
+        logging.info("----------------------------------------")
     df = df.drop_duplicates(subset=["image_id", "annotation_id"])
 
+    # 같은 id에서 완전 동일한 데이터 제거
+    df = df.drop_duplicates(subset=["image_id", "class_id", "x_center", "y_center", "width", "height", "disease"])
+    
     # 유충 데이터 제거
     df = df[df["class_id"] >= 0]
     df.to_csv(output_csv, index=False, encoding="utf-8-sig")
